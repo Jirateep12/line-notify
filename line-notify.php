@@ -1,7 +1,12 @@
  <?php
 
+    echo '
+    <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert-dev.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css">
+    ';
 
-    $header = "sb solar";
+    $header = "{ name }";
     $firstname = $_POST['firstname'];
     $lastname = $_POST['lastname'];
     $phone = $_POST['phone'];
@@ -16,15 +21,34 @@
         "\n" . "อื่นๆ: " . $more;
 
     if (isset($_POST["submit"])) {
-        if ($firstname <> "" ||  $lastname <> "" ||  $phone <> "" ||  $email <> "" ||  $more <> "") {
+        if ($firstname <> "" &&  $lastname <> "" &&  $phone <> "" &&  $email <> "" &&  $more <> "") {
             sendlinemesg();
             header('Content-Type: text/html; charset=utf8');
             $res = notify_message($message);
-            echo "<script>alert('สมัครสมาชิกเรียบร้อย');</script>";
-            header("location: index.php");
+            echo '<script>
+				setTimeout(function() {
+				swal({
+						title: "ติดต่อสอบถาม",
+						text: "การส่งสำเร็จ",
+						type: "success"
+					}, function() {
+					window.location = "index.php";
+				});
+				}, 200);
+			</script>
+			';
         } else {
-            echo "<script>alert('กรุณากรอกข้อมูลให้ครบถ้วน');</script>";
-            header("location: index.php");
+            echo '<script>
+				setTimeout(function() {
+				swal({
+						title: "ติดต่อสอบถาม",
+						text: "กรุณากรอกข้อมูลให้ครบ",
+						type: "error"
+					}, function() {
+					window.location = "index.php";
+				});
+				}, 500);
+			</script>';
         }
     }
 
